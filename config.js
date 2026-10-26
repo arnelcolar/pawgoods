@@ -26,9 +26,10 @@ globalThis.PAWGOODS_CONFIG = {
   nav: [
     { label: 'Shop All', href: '#grid' },
     { label: 'Feeding', href: '#grid' },
+    { label: 'Grooming', href: '#grid' },
     { label: 'Walking', href: '#grid' },
-    { label: 'Toys', href: '#grid' },
     { label: 'Sleep', href: '#grid' },
+    { label: 'Travel', href: '#grid' },
   ],
 
   // Utility links right (demo: Story, Contact, Track Order, Help). Hidden

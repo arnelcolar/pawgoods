@@ -24,6 +24,7 @@ node margin.mjs        # economics check, exits non-zero if a product is unviabl
 | `margin.mjs` | Reads `products.js`, checks every product is worth selling. |
 | `mobile-preview.html` | Phone-frame preview of the mobile UX, with the decisions listed beside it. |
 | `brand/` | The logo, its exported variants, favicon and icon set. Safe to delete if you supply your own. |
+| `assets/products/` | Product photography, square, with its licences in `CREDITS.md`. |
 
 Order matters: `config.js` loads before `products.js`, and `products.js` before
 the inline script.

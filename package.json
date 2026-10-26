@@ -1,0 +1,8 @@
+{
+  "name": "pawgoods",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "A pet-accessories storefront with no build step.",
+  "scripts": { "check": "node margin.mjs" }
+}
