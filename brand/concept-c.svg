@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- C — "P in a Bowl"
+       Monogram: the P's bowl is a full circle (the pad) and its counter a
+       smaller full circle (one toe), so it reads as a letter first and a paw
+       on second look. Ownable precisely because the bowl is not a geometric
+       sans bowl. Ring wall is an even 40 units all round.
+       Canvas 256. Bowl cx 138 cy 98 r 72; counter r 32; stem x 46–86. -->
+  <g fill="#000">
+    <path fill-rule="evenodd" d="
+      M138 26
+      A72 72 0 1 1 138 170
+      A72 72 0 1 1 138 26
+      Z
+      M138 66
+      A32 32 0 1 0 138 130
+      A32 32 0 1 0 138 66
+      Z"/>
+    <rect x="46" y="26" width="40" height="205"/>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- A — "Measured Paw"
+       Constructed rather than organic: three capsule toes of equal stroke
+       weight, the outer pair shorter and lower (which is how a dog's toes
+       actually sit), over a pad that is wider at the top than the bottom.
+       Canvas 256. Toes y 34–114, pad y 133–226. Footprint x 40–216. -->
+  <g fill="#000">
+    <rect x="106" y="34" width="44" height="66" rx="22"/>
+    <rect x="40" y="60" width="40" height="54" rx="20"/>
+    <rect x="176" y="60" width="40" height="54" rx="20"/>
+    <path d="M52 148 Q128 118 204 148 C196 200 164 226 128 226 C92 226 60 200 52 148 Z"/>
+  </g>
+</svg>

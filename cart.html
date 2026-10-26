@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
+<title>Cart</title>
+<meta name="description" content="">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#3c50e0">
+<link rel="icon" href="brand/favicon.ico" sizes="48x48">
+<link rel="icon" href="brand/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
+<link rel="manifest" href="brand/site.webmanifest">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to main content</a>
+
+<svg class="icon-defs" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l1 14H4L5 7z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></symbol>
+    <symbol id="i-arrow-l" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+  </defs>
+</svg>
+
+<header class="site-head">
+  <!-- Same two-row header as index.html, minus the sub-nav (no section links
+       to offer from a cart). cart.js re-stamps .cart-link and .back-link on
+       every cart change so the cart survives file:// navigation. -->
+  <div class="wrap head-row head-row-top">
+    <a class="logo" href="index.html">
+      <span class="logo-mark"><svg viewBox="0 0 256 256" focusable="false" aria-hidden="true">
+        <g fill="currentColor">
+          <rect x="108" y="40" width="40" height="64" rx="20"/>
+          <rect x="44" y="66" width="40" height="52" rx="20"/>
+          <rect x="172" y="66" width="40" height="52" rx="20"/>
+          <path d="M66 150 C66 136 82 126 100 126 H156 C174 126 190 136 190 150 C190 190 162 226 128 226 C94 226 66 190 66 150 Z"/>
+        </g>
+      </svg><span class="mascot" data-directions="mascots/pug-directions.webp" data-reactions="mascots/pug-reactions.webp" aria-label="Boop the pug"></span></span>
+      <span class="logo-text">Store</span>
+    </a>
+
+    <form class="search" role="search" onsubmit="return false">
+      <label>
+        <span class="visually-hidden">Search products</span>
+        <svg class="i-search" aria-hidden="true"><use href="#i-search"/></svg>
+        <input type="search" id="q" placeholder="I am shopping for..." autocomplete="off">
+      </label>
+    </form>
+
+    <a class="cart-link" href="cart.html" aria-label="Cart" aria-current="page">
+      <svg class="i-bag" aria-hidden="true"><use href="#i-bag"/></svg>
+      <span class="cart-count" data-cart-count hidden>0</span>
+    </a>
+
+    <a class="back-link" href="index.html">
+      <svg class="i-arrow-l" aria-hidden="true" style="width:1rem;height:1rem"><use href="#i-arrow-l"/></svg>
+      <span class="visually-hidden">Back to </span>Shop
+    </a>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <section class="band" aria-labelledby="cart-h">
+    <div class="wrap">
+      <div class="band-head"><h1 id="cart-h">Your cart</h1></div>
+
+      <!-- Empty state -->
+      <div class="cart-empty" id="empty-state" hidden>
+        <p>Your cart is empty.</p>
+        <a class="cta" href="index.html">Browse products</a>
+      </div>
+
+      <!-- Filled state -->
+      <div class="cart-layout" id="cart-layout" hidden>
+        <ul class="cart-lines" id="cart-lines"></ul>
+
+        <aside class="cart-summary" aria-labelledby="sum-h">
+          <h2 id="sum-h" class="visually-hidden">Order summary</h2>
+          <dl class="sum-rows">
+            <div><dt>Subtotal</dt><dd id="sum-sub">$0.00</dd></div>
+          </dl>
+          <p class="cart-note">
+            Shipping and tax are calculated by Stripe at checkout.
+          </p>
+          <button type="button" class="cta cart-checkout" id="checkout">Checkout</button>
+          <p class="cart-warn" id="checkout-warn" hidden></p>
+          <button type="button" class="linkish cart-clear" id="clear">Empty cart</button>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <p class="foot-mark" id="foot-mark"></p>
+        <p class="foot-note" id="foot-tagline"></p>
+      </div>
+    </div>
+    <div class="foot-base"><p class="mono-note" id="foot-note"></p></div>
+  </div>
+</footer>
+
+<template id="line-tpl">
+  <li class="cart-line">
+    <img class="line-shot" alt="" loading="lazy" width="140" height="180">
+    <div class="line-body">
+      <p class="cat-line line-cat"></p>
+      <h3 class="line-name"></h3>
+      <p class="line-price"></p>
+      <div class="qty" role="group">
+        <button type="button" class="qty-btn" data-act="dec" aria-label="Decrease quantity">&minus;</button>
+        <span class="qty-val" data-qty aria-live="polite" aria-atomic="true">1</span>
+        <button type="button" class="qty-btn" data-act="inc" aria-label="Increase quantity">+</button>
+        <button type="button" class="linkish line-remove" data-act="remove">Remove</button>
+      </div>
+      <span class="line-pay-slot"></span>
+    </div>
+    <span class="line-total"></span>
+  </li>
+</template>
+
+<script src="config.js"></script>
+<script src="products.js"></script>
+<script src="cart.js"></script>
+<script src="mascot.js"></script>
+<script>
+const cfg = globalThis.PAWGOODS_CONFIG ?? {};
+const Cart = globalThis.PawCart;
+
+const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+const money = (n) => usd.format(n);
+
+document.title = cfg.brand ? `Cart · ${cfg.brand}` : 'Cart';
+document.getElementById('foot-note').textContent = cfg.footer?.note ?? '';
+document.getElementById('foot-mark').textContent = cfg.brand ?? '';
+document.getElementById('foot-tagline').textContent = cfg.tagline ?? '';
+
+// The brand lives in config.js, so the cart header has to read it from there
+// too. Without this the logo falls back to the markup placeholder ("Store"),
+// which is only visible when cart.html is opened directly rather than
+// navigated to from the shop.
+const logoText = document.querySelector('.logo-text');
+if (cfg.brand) {
+  logoText.textContent = cfg.brand;
+  document.querySelector('.logo').setAttribute('aria-label', `${cfg.brand} home`);
+}
+
+if (cfg.searchPlaceholder) document.getElementById('q').placeholder = cfg.searchPlaceholder;
+if (cfg.searchLabel) document.querySelector('.search .visually-hidden').textContent = cfg.searchLabel;
+
+// No nav here on purpose: every config.nav href points at a section that only
+// exists on index.html, so rendering them would be dead controls.
+
+const emptyState = document.getElementById('empty-state');
+const layout = document.getElementById('cart-layout');
+const lines = document.getElementById('cart-lines');
+const tpl = document.getElementById('line-tpl');
+
+function paint() {
+  const items = Cart.items();
+  const n = Cart.count();
+
+  for (const el of document.querySelectorAll('[data-cart-count]')) {
+    el.textContent = String(n);
+    el.hidden = n === 0;
+  }
+
+  if (!items.length) {
+    // Clear the rows too, or they linger in the DOM with the layout hidden —
+    // which showed a stale line under the empty state.
+    lines.replaceChildren();
+    emptyState.hidden = false;
+    layout.hidden = true;
+    return;
+  }
+
+  emptyState.hidden = true;
+  layout.hidden = false;
+
+  lines.replaceChildren();
+  let unpaid = 0;
+  for (const { product: p, qty } of items) {
+    if (!p.stripeLink) unpaid++;
+    const node = tpl.content.cloneNode(true);
+    const row = node.querySelector('.cart-line');
+    row.dataset.id = p.id;
+
+    const shot = row.querySelector('.line-shot');
+    shot.src = p.image;
+    // Name is the heading beside it, so a repeating alt says it twice.
+    shot.alt = '';
+
+    row.querySelector('.line-cat').textContent = p.category;
+    row.querySelector('.line-name').textContent = p.name;
+    row.querySelector('.line-price').textContent = `${money(p.price)} each`;
+    row.querySelector('[data-qty]').textContent = String(qty);
+    row.querySelector('.line-total').textContent = money(p.price * qty);
+
+    // Per-item pay. Payment Links are one product each, so with no backend a
+    // multi-item order is necessarily one charge per item. Charging per line
+    // rather than walking the cart means nothing is deleted on the way out, so
+    // an abandoned checkout leaves the cart intact.
+    const pay = row.querySelector('.line-pay-slot');
+    if (p.stripeLink) {
+      pay.replaceWith(Object.assign(document.createElement('a'), {
+        className: 'buy line-pay',
+        href: p.stripeLink,
+        rel: 'noopener',
+        textContent: 'Pay for this',
+      }));
+    } else {
+      pay.replaceChildren(); // nothing to pay yet; the summary warns instead
+    }
+
+    // Label each control for this specific product, since the row is repeated.
+    const label = p.name;
+    row.querySelector('[data-act="dec"]').setAttribute('aria-label', `Decrease quantity of ${label}`);
+    row.querySelector('[data-act="inc"]').setAttribute('aria-label', `Increase quantity of ${label}`);
+    row.querySelector('[data-act="remove"]').setAttribute('aria-label', `Remove ${label} from cart`);
+
+    const inc = row.querySelector('[data-act="inc"]');
+    if (qty >= Cart.MAX_QTY) {
+      inc.disabled = true; // dead control at the cap, so it shouldn't look live
+    }
+
+    lines.append(node);
+  }
+
+  document.getElementById('sum-sub').textContent = money(Cart.subtotal());
+
+  // Gate the single Checkout button on every item actually being payable. If
+  // anything lacks a link, that path would silently drop a line, so say so
+  // instead of charging for part of the order.
+  checkoutBtn.disabled = unpaid > 0;
+  if (unpaid > 0) {
+    warn.hidden = false;
+    warn.textContent = 'This is a demo store, so checkout is switched off. The cart works: add and remove items, and the total follows.';
+  } else if (!endpoint) {
+    warn.hidden = false;
+    warn.textContent = 'No server connected, so each item is charged separately. Pay for each line below.';
+  } else {
+    warn.hidden = true;
+  }
+}
+
+// One delegated listener rather than a handler per row, so re-rendering the
+// list never leaves stale listeners behind.
+lines.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-act]');
+  if (!btn) return;
+  const id = btn.closest('.cart-line').dataset.id;
+  if (btn.dataset.act === 'inc') Cart.add(id, 1);
+  else if (btn.dataset.act === 'dec') Cart.setQty(id, (Cart.items().find((r) => r.product.id === id)?.qty ?? 1) - 1);
+  else Cart.remove(id);
+});
+
+document.getElementById('clear').addEventListener('click', () => Cart.clear());
+
+/*
+ * Checkout, and the honest limit of the no-server architecture.
+ *
+ * There is no backend, so there is no single place to create a combined Stripe
+ * Checkout Session. Payment Links are one product each, so a multi-item cart
+ * has to be paid as one payment per item.
+ *
+ * Two paths, in priority order:
+ *   1. Stripe Checkout Sessions — if `cart.checkoutEndpoint` is set, POST the
+ *      cart there and let the server make one session. Requires deploying that
+ *      function; see README.
+ *   2. Payment Links — otherwise, each cart line carries its own pay button
+ *      pointing at that product's Payment Link, so the customer pays per item.
+ *      Nothing is removed on the way out, so an abandoned checkout leaves the
+ *      cart intact.
+ */
+const checkoutBtn = document.getElementById('checkout');
+const warn = document.getElementById('checkout-warn');
+const endpoint = cfg.cart?.checkoutEndpoint;
+
+checkoutBtn.addEventListener('click', async () => {
+  const items = Cart.items();
+  if (!items.length) return;
+
+  if (endpoint) {
+    checkoutBtn.disabled = true;
+    checkoutBtn.textContent = 'Redirecting…';
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          items: items.map((r) => ({ id: r.product.id, qty: r.qty })),
+        }),
+      });
+      const { url } = await res.json();
+      if (!url) throw new Error('no url returned');
+      window.location.href = url;
+    } catch (err) {
+      checkoutBtn.disabled = false;
+      checkoutBtn.textContent = 'Checkout';
+      warn.hidden = false;
+      warn.textContent = `Could not start checkout: ${err.message}`;
+    }
+    return;
+  }
+
+  // No server: a combined Stripe Checkout Session cannot be created from the
+  // browser without exposing a secret key. Say so rather than implying a
+  // cart-wide charge happened. Per-item links are the working path.
+  const unpaid = items.filter((r) => !r.product.stripeLink);
+  if (unpaid.length) {
+    warn.hidden = false;
+    warn.textContent = `${unpaid.length} item(s) still need a stripeLink before checkout can run.`;
+    return;
+  }
+
+  warn.hidden = false;
+  warn.textContent = 'One payment per item: press "Pay for this" on each line. Setting cart.checkoutEndpoint in config.js replaces this with a single combined payment.';
+});
+
+// On file:// the cart may have arrived in the URL fragment rather than in
+// storage (Firefox partitions localStorage per file). Read it before painting.
+Cart.receive();
+
+window.addEventListener('pawcart:change', paint);
+paint();
+
+// Keep every outbound link carrying the cart in sync, so navigating between the
+// two pages works even when the browser does not share file:// storage.
+// Re-stamped on every change, not just load, so a removal is reflected in the
+// link rather than sending the customer back with the item they just deleted.
+function stampLinks() {
+  for (const el of document.querySelectorAll('.cart-link, .back-link, .logo')) {
+    Cart.stampLink(el, el.classList.contains('back-link') || el.classList.contains('logo') ? 'index.html' : 'cart.html');
+  }
+}
+
+stampLinks();
+window.addEventListener('pawcart:change', stampLinks);
+</script>
+
+</body>
+</html>

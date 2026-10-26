@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pawgoods — mobile UX preview</title>
+<!--
+  Mobile UX preview, in the same idiom as the NOOK prototype: a phone frame
+  with switchable screens.
+
+  Deliberately different from NOOK's: those screens are hand-built, so they are
+  the artefact. Here the screens are the real pages in iframes at a real 390x844
+  viewport, because the mobile UX already exists in index.html and cart.html.
+  A hand-copied second version would drift from the site the moment anything
+  changed. Same phone, same bezel, same dot switcher — but what you see is
+  what ships.
+-->
+<style>
+  :root {
+    --bg: #ffffff; --surface: #f7f9fc; --ink: #1c274c; --body: #6c6f93;
+    --faint: #8d93a5; --line: #e5e7eb; --blue: #3c50e0; --blue-dark: #1c3fb7;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 40px 24px;
+    background: #ededed; color: var(--ink);
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    display: flex; gap: 48px; align-items: flex-start; justify-content: center;
+    flex-wrap: wrap;
+  }
+  h1 { font-size: 15px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 4px; }
+  .sub { font-size: 13px; color: var(--body); margin: 0 0 24px; max-width: 44ch; line-height: 1.6; }
+
+  /* 406x860 with an 8px bezel leaves the iframe exactly 390x844. */
+  .phone {
+    width: 406px; height: 860px;
+    position: relative;
+    border-radius: 44px;
+    border: 8px solid #111;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+    background: #fff;
+    flex-shrink: 0;
+  }
+  .screen { position: absolute; inset: 0; border-radius: 36px; overflow: hidden; display: none; background: #fff; }
+  .screen.active { display: block; }
+  .screen iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  /* Decoration only. A notch would be drawn here too, but it covers the top of
+     every screen — and the page's own env(safe-area-inset-top) padding is what
+     would move that content clear of one, which resolves to 0 here. Drawing a
+     notch that hides the thing being previewed is worse than omitting it. */
+  .home-bar {
+    position: absolute; bottom: 7px; left: 50%; transform: translateX(-50%);
+    width: 134px; height: 5px; border-radius: 3px; background: rgba(0, 0, 0, 0.28);
+    z-index: 5; pointer-events: none;
+  }
+
+  .dots { display: flex; gap: 6px; justify-content: center; margin-top: 20px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #c9ccd6; border: 0; padding: 0; cursor: pointer; }
+  .dot.active { width: 18px; border-radius: 3px; background: var(--ink); }
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; }
+  .tab {
+    font: inherit; font-size: 12px; font-weight: 600;
+    padding: 9px 15px; border-radius: 999px; cursor: pointer;
+    background: #fff; border: 1px solid var(--line); color: var(--body);
+  }
+  .tab.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+  .notes { max-width: 46ch; }
+  .notes h2 { font-size: 13px; letter-spacing: 1.4px; text-transform: uppercase; margin: 0 0 14px; color: var(--ink); }
+  .note { border-top: 1px solid #d9dbe2; padding: 13px 0; }
+  .note:first-of-type { border-top: 0; }
+  .note b { display: block; font-size: 13.5px; margin-bottom: 3px; }
+  .note span { font-size: 12.5px; color: var(--body); line-height: 1.62; }
+  .controls { display: flex; gap: 8px; margin-top: 18px; }
+  .controls button {
+    font: inherit; font-size: 12px; font-weight: 600; padding: 8px 13px;
+    border-radius: 999px; border: 1px solid var(--line); background: #fff;
+    color: var(--body); cursor: pointer;
+  }
+  .status { font-size: 12px; color: var(--faint); margin-top: 10px; min-height: 1.4em; }
+  .caveat {
+    margin-top: 22px; padding: 12px 14px; border-radius: 8px;
+    background: #fff; border: 1px solid var(--line);
+    font-size: 12px; color: var(--body); line-height: 1.6;
+  }
+  .caveat b { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div>
+  <h1>Pawgoods</h1>
+  <p class="sub">Mobile UX preview. The screens are the real pages at a real
+    390&times;844 viewport — not redrawn mockups.</p>
+
+  <div class="tabs" role="tablist">
+    <button class="tab active" data-screen="store" role="tab">Storefront</button>
+    <button class="tab" data-screen="browse" role="tab">Browsing</button>
+    <button class="tab" data-screen="cart" role="tab">Cart</button>
+  </div>
+
+  <div class="phone">
+    <div class="screen active" id="s-store"><iframe id="f-store" src="index.html" title="Storefront, top of page"></iframe></div>
+    <div class="screen" id="s-browse"><iframe id="f-browse" src="index.html#grid" title="Storefront, product grid and category chips"></iframe></div>
+    <div class="screen" id="s-cart"><iframe id="f-cart" src="cart.html" title="Cart"></iframe></div>
+
+    <div class="home-bar" aria-hidden="true"></div>
+  </div>
+
+  <div class="dots">
+    <button class="dot active" data-screen="store" aria-label="Storefront"></button>
+    <button class="dot" data-screen="browse" aria-label="Browsing"></button>
+    <button class="dot" data-screen="cart" aria-label="Cart"></button>
+  </div>
+
+  <div class="controls">
+    <span class="status" id="status">Add something to the cart on the Storefront
+      tab, then switch to Cart — these are the live pages.</span>
+  </div>
+</div>
+
+<div class="notes">
+  <h2>What changed for the phone</h2>
+
+  <div class="note">
+    <b>The header scrolls away</b>
+    <span>Three rows of pinned chrome is a quarter of a phone viewport held for
+      the whole scroll. It is static below 48rem so the products get the
+      screen. The cart bar takes over the persistent-cart job.</span>
+  </div>
+
+  <div class="note">
+    <b>A cart bar in thumb reach</b>
+    <span>Count, running total and a route to the cart, fixed to the bottom.
+      Hidden entirely while the cart is empty, and the footer only reserves room
+      when it is showing, so an empty cart leaves no gap.</span>
+  </div>
+
+  <div class="note">
+    <b>Chips scroll instead of wrapping</b>
+    <span>Nine category chips wrapped to four lines and pushed the products
+      below two screens. Now a horizontal snap-scroller, full-bleed to the screen
+      edge with the container padding restored inside.</span>
+  </div>
+
+  <div class="note">
+    <b>Price and Add to Cart stack</b>
+    <span>Below 30rem a two-up card is narrower than price and button side by
+      side, so they wrapped unpredictably and the tap target moved around the
+      grid. Stacked, every target is the same size and place.</span>
+  </div>
+
+  <div class="note">
+    <b>Search gets its own row</b>
+    <span>Logo, search and cart could not share one row without squeezing the
+      search to a stub. It now sits full-width below the logo, as the reference
+      does.</span>
+  </div>
+
+  <div class="note">
+    <b>Single-column strips</b>
+    <span>The trust strip and the footer link columns go to one per row: at
+      two-up, every heading wrapped onto two or three lines and the strip grew
+      taller than the hero copy above it.</span>
+  </div>
+
+  <div class="note">
+    <b>Touch behaviour, corrected</b>
+    <span>All fourteen <code>:hover</code> rules moved inside
+      <code>@media (hover: hover) and (pointer: fine)</code> — touch fakes hover
+      on first tap and leaves it there, so an ungated hover reads as a control
+      stuck down. <code>:active</code> is deliberately ungated: it fires while
+      the finger is down, like a native button. Tap highlight off, inputs at
+      16px so iOS never zooms, zoom never disabled.</span>
+  </div>
+
+  <div class="caveat">
+    <b>What this preview cannot show.</b> <code>env(safe-area-inset-*)</code>
+    resolves to 0 in a desktop browser, so the page's safe-area padding collapses
+    to nothing here and the home indicator on the frame is decoration, not proof
+    the insets work. The same goes for the removed tap highlight, sticky hover and
+    the URL bar's effect on viewport height — all need real hardware.
+
+    <br><br>Two limits of wrapping <code>file://</code> pages in frames: the
+    frames are cross-origin to this page, so it cannot script them or read the
+    cart out of them; and in Firefox, which gives each <code>file://</code>
+    document its own storage, the cart will not carry from the Storefront frame
+    to the Cart frame. Chromium shares one origin, so it does. This preview
+    therefore shows the layout, not the handoff.
+  </div>
+</div>
+
+<script>
+// The cart is shared across the iframes because Chromium gives every file://
+// document one storage origin. Firefox does not, which is exactly why the site
+// carries the cart in the URL fragment — and this preview is Chromium, so it
+// never exercises that path.
+const FRAME = { store: 'f-store', browse: 'f-browse', cart: 'f-cart' };
+
+// All three frames load at once, so a frame showing a different page keeps the
+// state it painted with and never notices another tab's cart changes — which is
+// not what navigating there would do. Each switch gives the frame a different
+// URL so it really reloads: assigning an iframe the URL it already has does
+// nothing at all, and the frames are cross-origin, so reload() is unavailable.
+// The counter rides in the query string, which a file:// URL accepts and the
+// page ignores; the anchor is kept after it so #grid still works. Nothing here
+// collides with the #c= fragment the site uses to hand the cart over.
+const SRC = { store: 'index.html', browse: 'index.html#grid', cart: 'cart.html' };
+let shown = 'store';
+let nav = 0;
+
+function show(id) {
+  for (const s of ['store', 'browse', 'cart']) {
+    document.getElementById('s-' + s).classList.toggle('active', s === id);
+  }
+  for (const el of document.querySelectorAll('[data-screen]')) {
+    const on = el.dataset.screen === id;
+    el.classList.toggle('active', on);
+    el.setAttribute('aria-pressed', String(on));
+  }
+  if (id === shown) return;
+  shown = id;
+  const [path, hash] = SRC[id].split('#');
+  document.getElementById(FRAME[id]).setAttribute('src', `${path}?r=${++nav}${hash ? '#' + hash : ''}`);
+}
+
+for (const el of document.querySelectorAll('[data-screen]')) {
+  el.addEventListener('click', () => show(el.dataset.screen));
+}
+</script>
+
+</body>
+</html>

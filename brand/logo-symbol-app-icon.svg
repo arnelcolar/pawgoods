@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><title>Pawgoods</title><rect width="256" height="256" rx="57.6" fill="#3c50e0"/><g transform="translate(18.82 14.55) scale(0.853)" fill="#ffffff">
+  
+  <!-- Pawgoods mark — "Measured Paw"
+       A constructed paw rather than an organic one: three capsule toes of equal
+       stroke weight with the outer pair shorter and lower (which is how a dog's
+       toes sit), over a pad that is wider across the top and tapers to a
+       rounded point. Reading it: the pad is drawn to the same 20–22u radius
+       language as the toes, so the whole mark looks measured rather than
+       drawn — which is the brand's no-nonsense voice.
+
+       Used with fill="#ffffff" so one file serves the indigo header tile,
+       the white-on-indigo version, and print black.
+       Canvas 256. Toes y 40–118, pad y 126–226, footprint x 44–212. -->
+  <g fill="#ffffff">
+    <rect x="108" y="40" width="40" height="64" rx="20"/>
+    <rect x="44" y="66" width="40" height="52" rx="20"/>
+    <rect x="172" y="66" width="40" height="52" rx="20"/>
+    <path d="M66 150 C66 136 82 126 100 126 H156 C174 126 190 136 190 150 C190 190 162 226 128 226 C94 226 66 190 66 150 Z"/>
+  </g>
+</g></svg>

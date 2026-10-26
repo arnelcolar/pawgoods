@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- B — "The Tag"
+       Emblem, not a pictogram: a keyring tag with a vertical slot rather than a
+       round punched hole. The slot is the ownable detail — it reads as a
+       keyring at any size and is not the round-hole default every pet brand
+       uses. Carries the "survives" promise as gear.
+       Canvas 256. Body x 52–204, y 16–240. -->
+  <path fill="#000" fill-rule="evenodd" d="
+    M104 16
+    H152
+    A52 52 0 0 1 204 68
+    V188
+    A52 52 0 0 1 152 240
+    H104
+    A52 52 0 0 1 52 188
+    V68
+    A52 52 0 0 1 104 16
+    Z
+    M116 40
+    A12 12 0 0 1 140 40
+    V88
+    A12 12 0 0 1 116 88
+    Z"/>
+</svg>

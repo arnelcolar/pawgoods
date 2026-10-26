@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256">
+  <!-- A v2 — "Measured Paw"
+       v1 fix: the pad was 152 wide and read as a smile. Narrowed to 124 and
+       given a flatter top with sides that taper to a rounded point, which is
+       how a pad actually sits, so it no longer reads as a mouth.
+       Toes brought closer to the pad (26–34u gaps, 1.5px at 16px).
+       Canvas 256. Toes y 40–118, pad y 126–226. Footprint x 44–212. -->
+  <g fill="#000">
+    <rect x="108" y="40" width="40" height="64" rx="20"/>
+    <rect x="44" y="66" width="40" height="52" rx="20"/>
+    <rect x="172" y="66" width="40" height="52" rx="20"/>
+    <path d="M66 150 C66 136 82 126 100 126 H156 C174 126 190 136 190 150 C190 190 162 226 128 226 C94 226 66 190 66 150 Z"/>
+  </g>
+</svg>
