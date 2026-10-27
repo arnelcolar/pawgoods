@@ -14,15 +14,14 @@
 <link rel="icon" href="brand/favicon-32.png" sizes="32x32">
 <link rel="apple-touch-icon" href="brand/apple-touch-icon.png">
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <a class="skip" href="#main">Skip to main content</a>
 
-<!-- All copy below is written by config.js. The markup is scaffolding only;
-     edit config.js, not this file. Icons are keyed from config and rendered
-     here so there is no icon-font dependency. -->
+
 
 <svg class="icon-defs" aria-hidden="true" focusable="false">
   <defs>
@@ -51,19 +50,23 @@
 <div class="announce" hidden><p></p></div>
 
 <header class="site-head">
-  <!-- Row 1: logo, category pill, search, account, cart -->
+  
   <div class="wrap head-row head-row-top">
-    <a class="logo" href="index.html">
-      <span class="logo-mark"><svg viewBox="0 0 256 256" focusable="false" aria-hidden="true">
-        <g fill="currentColor">
-          <rect x="108" y="40" width="40" height="64" rx="20"/>
-          <rect x="44" y="66" width="40" height="52" rx="20"/>
-          <rect x="172" y="66" width="40" height="52" rx="20"/>
-          <path d="M66 150 C66 136 82 126 100 126 H156 C174 126 190 136 190 150 C190 190 162 226 128 226 C94 226 66 190 66 150 Z"/>
-        </g>
-      </svg><span class="mascot" data-directions="mascots/pug-directions.webp" data-reactions="mascots/pug-reactions.webp" aria-label="Boop the pug"></span></span>
-      <span class="logo-text">Store</span>
-    </a>
+    
+    <div class="logo-wrap">
+      <a class="logo" href="index.html">
+        <span class="logo-mark"><svg viewBox="0 0 256 256" focusable="false" aria-hidden="true">
+          <g fill="currentColor">
+            <rect x="108" y="40" width="40" height="64" rx="20"/>
+            <rect x="44" y="66" width="40" height="52" rx="20"/>
+            <rect x="172" y="66" width="40" height="52" rx="20"/>
+            <path d="M66 150 C66 136 82 126 100 126 H156 C174 126 190 136 190 150 C190 190 162 226 128 226 C94 226 66 190 66 150 Z"/>
+          </g>
+        </svg></span>
+        <span class="logo-text">Store</span>
+      </a>
+      <span class="mascot" data-directions="mascots/pug-directions.webp" data-reactions="mascots/pug-reactions.webp" aria-label="Boop the pug"></span>
+    </div>
 
     <nav class="main-nav" aria-label="Main"><ul></ul></nav>
 
@@ -77,7 +80,7 @@
     </a>
   </div>
 
-  <!-- Expandable search row, opened by the header icon -->
+  
   <div class="search-drawer" id="search-drawer" hidden>
     <div class="wrap">
       <form class="search" role="search" onsubmit="return false">
@@ -89,7 +92,7 @@
     </div>
   </div>
 
-  <!-- Row 2: secondary nav -->
+  
   <div class="head-sub" hidden>
     <div class="wrap head-row head-row-sub">
       <nav class="sub-nav" aria-label="Sections"><ul></ul></nav>
@@ -100,7 +103,7 @@
 
 <main id="main" tabindex="-1">
 
-  <!-- Promo hero: 100vh full-bleed cover like the demo (theirs: hero-01.jpg) -->
+  
   <section class="promo" aria-labelledby="hero-h">
     <img class="promo-photo" alt="" decoding="async" fetchpriority="high"
       width="1920" height="1080"
@@ -113,16 +116,23 @@
     </div>
   </section>
 
-  <!-- Product grid -->
-  <section class="band" id="grid" aria-labelledby="grid-h">
+  
+  <section class="band iconcats" id="categories" aria-labelledby="cat-h" hidden>
     <div class="wrap">
-      <div class="band-head">
-        <h2 id="grid-h"></h2>
-        <button type="button" class="pill-cta" id="view-all" hidden></button>
+      <div class="band-head center"><div><h2 id="cat-h"></h2></div></div>
+      <span class="band-rule" aria-hidden="true"></span>
+      <ul class="icon-grid cat-cards" id="cat-grid"></ul>
+      <div class="band-cta">
+        <button type="button" class="pill-cta" id="cat-more" aria-expanded="false">View More</button>
       </div>
-      <div class="filter-row" role="group" hidden></div>
-      <p class="filter-status" id="filter-status" role="status"></p>
-      <h3 class="visually-hidden" id="filters-h"></h3>
+    </div>
+  </section>
+
+  
+  <section class="band feat" id="grid" aria-labelledby="grid-h">
+    <div class="wrap">
+      <div class="band-head center"><div><h2 id="grid-h"></h2></div></div>
+      <span class="band-rule" aria-hidden="true"></span>
       <div id="grid-list" class="grid" aria-busy="true">
         <p class="loading">Loading products&hellip;</p>
       </div>
@@ -130,44 +140,49 @@
     </div>
   </section>
 
-  <!-- Category tiles: circular photos, as in the reference -->
-  <section class="band" id="categories" aria-labelledby="cat-h" hidden>
-    <div class="wrap">
-      <div class="band-head">
-        <h2 id="cat-h"></h2>
-        <div class="cat-nav">
-          <button type="button" class="round-btn" id="cat-prev" aria-label="Previous categories"><svg aria-hidden="true" style="transform:rotate(180deg)"><use href="#i-arrow-r"/></svg></button>
-          <button type="button" class="round-btn" id="cat-next" aria-label="Next categories"><svg aria-hidden="true"><use href="#i-arrow-r"/></svg></button>
-        </div>
-      </div>
-      <ul class="cat-grid" id="cat-grid"></ul>
-    </div>
-  </section>
-
-  <!-- Spotlight: new-arrival feature, image + copy side by side -->
-  <section class="band" id="split" hidden>
-    <div class="wrap split-row">
-      <a class="split-media" href="#grid">
+  
+  <section class="band newarr" id="newarr" aria-label="New arrivals" hidden>
+    <div class="wrap newarr-grid">
+      <a class="newarr-media" href="#grid" aria-label="New Arrivals">
         <img alt="" loading="lazy" width="1600" height="800">
-        <span class="split-label" id="split-label">New Arrival</span>
+        <span class="newarr-label">New Arrival</span>
       </a>
-      <div class="split-product" id="split-product"></div>
+      <article class="card newarr-card" id="newarr-right"></article>
     </div>
   </section>
 
-  <!-- Testimonials -->
-  <section class="band reviews" id="reviews" aria-labelledby="reviews-h" hidden>
+  
+  <section class="band collections" id="collections" aria-labelledby="collections-h" hidden>
     <div class="wrap">
-      <div class="band-head center"><div><p class="eyebrow" id="reviews-eyebrow"></p><h2 id="reviews-h"></h2></div></div>
-      <ul class="review-list" id="review-list"></ul>
+      <div class="band-head center"><div><h2 id="collections-h"></h2><p class="band-sub" id="collections-sub"></p></div></div>
+      <span class="band-rule" aria-hidden="true"></span>
+      <ul class="collection-grid" id="collection-grid"></ul>
     </div>
   </section>
 
-  <!-- Why choose us: 4-up like the demo -->
+  
+  <section class="band wfh" id="wfh" aria-labelledby="wfh-h" hidden>
+    <div class="wrap">
+      <div class="band-head"><div><h2 id="wfh-h"></h2></div><p class="wfh-sub" id="wfh-sub"></p></div>
+      <ul class="wfh-grid" id="wfh-grid"></ul>
+    </div>
+  </section>
+
+  
   <section class="band why" id="why" aria-labelledby="why-h" hidden>
     <div class="wrap">
-      <div class="band-head center"><div><p class="eyebrow" id="why-eyebrow"></p><h2 id="why-h"></h2></div></div>
+      <div class="band-head center"><div><h2 id="why-h"></h2></div></div>
       <ul class="why-list four-up" id="why-list"></ul>
+    </div>
+  </section>
+
+  
+  <section class="band ctabanner" id="ctabanner" aria-labelledby="ctabanner-h" hidden>
+    <img class="ctabanner-photo" alt="" loading="lazy" width="1920" height="700">
+    <div class="wrap ctabanner-copy">
+      <p class="ctabanner-kicker" id="ctabanner-kicker"></p>
+      <h2 id="ctabanner-h"></h2>
+      <a class="cta ctabanner-btn" id="ctabanner-btn" href="#grid"></a>
     </div>
   </section>
 
@@ -175,21 +190,21 @@
 
 <footer class="site-foot">
   <div class="wrap">
-    <div class="foot-grid">
+    <div class="foot-grid four">
       <div class="foot-brand">
         <p class="foot-mark"></p>
         <p class="foot-note"></p>
       </div>
-      <div id="foot-columns"></div>
+      <div class="foot-links"><h2 class="foot-h" id="foot-links-h">Links</h2><ul class="foot-list" id="foot-links"></ul></div>
+      <div class="foot-cats"><h2 class="foot-h">Categories</h2><ul class="foot-list" id="foot-cats"></ul></div>
+      <div class="foot-sub"><h2 class="foot-h"><label for="foot-email">Subscribe</label></h2><form class="sub-form" id="sub-form"><input type="email" id="foot-email" name="email" placeholder="Your email address" required autocomplete="email"><button type="submit" class="cta">Subscribe</button></form><p class="sub-note" id="sub-note" role="status"></p></div>
+      <div id="foot-columns" hidden></div>
     </div>
     <div class="foot-base"><p class="mono-note"></p></div>
   </div>
 </footer>
 
-<!-- Mobile cart bar. On a phone the header badge is either scrolled away or
-     36px tall, so this is the persistent count, running total and route to the
-     cart. Hidden entirely while the cart is empty. Stamped with the cart in the
-     fragment by paintCount(), like the header badge. -->
+
 <a class="cart-bar" id="cart-bar" href="cart.html" hidden>
   <span class="cart-bar-count"><span data-cart-count>0</span></span>
   <span class="cart-bar-sum" id="cart-bar-sum"></span>
@@ -198,19 +213,12 @@
 
 <template id="card-tpl">
   <article class="card">
-    <a class="shot-link" href="#grid">
-      <span class="shot-wrap">
-        <img class="shot" alt="" loading="lazy" width="700" height="933">
-        <span class="badge" hidden></span>
-      </span>
-    </a>
-    <p class="cat-line"></p>
-    <h3 class="name"></h3>
-    <p class="desc"></p>
-    <div class="buy-row">
-      <span class="price"></span>
-      <button type="button" class="buy"></button>
-    </div>
+    <span class="shot-wrap">
+      <img class="shot" alt="" loading="lazy" width="640" height="730">
+      <span class="badge" hidden></span>
+      <button type="button" class="buy" aria-label="Add to cart"></button>
+      <span class="shot-cap" aria-hidden="true"><span class="name"></span><span class="price"></span></span>
+    </span>
   </article>
 </template>
 
@@ -248,24 +256,16 @@
 const cfg = globalThis.PAWGOODS_CONFIG ?? {};
 const set = (sel, text) => { const el = document.querySelector(sel); if (el) el.textContent = text; };
 const show = (sel, on) => { const el = document.querySelector(sel); if (el) el.hidden = !on; };
-const setEyebrow = (sel, text) => {
-  const el = document.querySelector(sel);
-  if (!el || !text) return;
-  let brow = el.previousElementSibling;
-  if (!brow || !brow.classList.contains('eyebrow')) {
-    brow = document.createElement('p');
-    brow.className = 'eyebrow';
-    el.before(brow);
-  }
-  brow.textContent = text;
-};
+
+
+const setEyebrow = (sel, text) => {};
 const icon = (name) => {
-  // Only allow keys we actually ship, so a typo in config cannot inject markup.
+  
   const known = ['truck', 'refresh', 'shield', 'chat'];
   return known.includes(name) ? `#i-${name}` : '#i-chat';
 };
 
-/* ---------------------------------------------------------------- content */
+
 
 try {
   if (cfg.title) document.title = cfg.title;
@@ -285,7 +285,7 @@ try {
     logo.setAttribute('aria-label', `${cfg.brand} home`);
   }
 
-  // Top-row nav. A `pill` item gets the rounded dropdown treatment.
+  
   const navList = document.querySelector('.main-nav ul');
   for (const item of cfg.nav ?? []) {
     const li = document.createElement('li');
@@ -302,7 +302,7 @@ try {
   }
   show('.main-nav', (cfg.nav ?? []).length > 0);
 
-  // Second-row nav.
+  
   const subWrap = document.querySelector('.head-sub');
   const subList = document.querySelector('.sub-nav ul');
   for (const item of cfg.subnav ?? []) {
@@ -318,7 +318,7 @@ try {
   document.querySelector('.search input').placeholder = cfg.searchPlaceholder ?? 'Search products...';
   document.querySelector('.search .visually-hidden').textContent = cfg.searchLabel ?? 'Search products';
 
-  // Search icon toggles the drawer row, like the demo's expanding search.
+  
   const searchToggle = document.getElementById('search-toggle');
   const searchDrawer = document.getElementById('search-drawer');
   searchToggle.addEventListener('click', () => {
@@ -328,7 +328,7 @@ try {
     if (open) document.getElementById('q').focus();
   });
 
-  // Promo hero: kicker + headline + lead + CTA over the photo.
+  
   const h1 = document.getElementById('hero-h');
   h1.append(cfg.hero.headline ?? '');
   if (cfg.hero.emphasis) h1.append(Object.assign(document.createElement('em'), { textContent: cfg.hero.emphasis }));
@@ -340,47 +340,10 @@ try {
   heroCta.href = cfg.hero.ctaHref ?? '#grid';
   show('.promo .cta', !!cfg.hero.cta);
 
-  setEyebrow('#grid-h', cfg.sections.products.eyebrow);
   set('#grid-h', cfg.sections.products.heading);
-  set('#view-all', cfg.sections.products.cta);
-  show('#view-all', !!cfg.sections.products.cta);
-  document.getElementById('view-all').addEventListener('click', () => {
-    // "View All" clears any filter, which is what it implies.
-    document.querySelector('.filter[data-filter="all"]')?.click();
-    document.getElementById('grid').scrollIntoView();
-  });
-
-  set('#filters-h', cfg.sections.products.filterLabel);
-  document.querySelector('#filters-h').className = 'visually-hidden';
-  document.getElementById('filter-status').setAttribute('aria-label', 'Result count');
 
   const catSection = document.getElementById('categories');
   if (cfg.sections.categories) { setEyebrow('#cat-h', cfg.sections.categories.eyebrow); set('#cat-h', cfg.sections.categories.heading); }
-
-  const sp = cfg.sections.split;
-  if (sp) {
-    document.getElementById('split').hidden = false;
-    set('#split-label', sp.label ?? 'New Arrival');
-    document.querySelector('.split-media img').src = sp.image || '';
-  }
-
-  // Reviews.
-  const revSection = document.getElementById('reviews');
-  const revList = document.getElementById('review-list');
-  if (cfg.reviews?.items?.length) {
-    revList.replaceChildren();
-    set('#reviews-eyebrow', cfg.reviews.eyebrow);
-    set('#reviews-h', cfg.reviews.heading);
-    for (const r of cfg.reviews.items) {
-      const li = document.createElement('li');
-      li.className = 'review';
-      li.innerHTML = '<p class="stars" aria-label="Rated 5 out of 5">★★★★★</p><blockquote></blockquote><p class="reviewer"></p>';
-      li.querySelector('blockquote').textContent = r.quote;
-      li.querySelector('.reviewer').textContent = r.name;
-      revList.append(li);
-    }
-    revSection.hidden = false;
-  }
 
   const whySection = document.getElementById('why');
   const whyList = document.getElementById('why-list');
@@ -388,19 +351,20 @@ try {
     whyList.replaceChildren();
     setEyebrow('#why-h', cfg.sections.why.eyebrow);
     set('#why-h', cfg.sections.why.heading);
+    
+    const whyIcons = { truck: 'las la-shipping-fast', refresh: 'las la-credit-card', shield: 'las la-shield-alt', chat: 'las la-undo' };
     (cfg.sections.why.items ?? []).forEach((item) => {
       const li = document.createElement('li');
-      const h3 = document.createElement('h3');
-      h3.textContent = item.heading;
-      const p = document.createElement('p');
-      p.textContent = item.body;
-      li.append(h3, p);
+      li.innerHTML = '<span class="why-ico" aria-hidden="true"><i class="las"></i></span><h3></h3><p></p>';
+      li.querySelector('i').className = whyIcons[item.icon] ?? 'las la-comments';
+      li.querySelector('h3').textContent = item.heading;
+      li.querySelector('p').textContent = item.body;
       whyList.append(li);
     });
     whySection.hidden = false;
   }
 
-  // Promo photo falls back to the first product photo.
+  
   const products = globalThis.PAWGOODS_PRODUCTS ?? [];
   const promoImg = document.querySelector('.promo-photo');
   if (promoImg && !promoImg.getAttribute('src')) promoImg.src = products[0]?.image || '';
@@ -408,45 +372,54 @@ try {
   set('.foot-mark', cfg.brand);
   set('.foot-note', cfg.tagline);
   set('.foot-base .mono-note', cfg.footer.note);
-  const footCols = document.getElementById('foot-columns');
-  footCols.className = 'foot-cols';
-  // __COUNT__ keeps copy honest when the catalogue changes, so read the length
-  // off the global rather than the block-scoped `products` below.
-  const count = (globalThis.PAWGOODS_PRODUCTS ?? []).length;
-  for (const col of cfg.footer.columns ?? []) {
-    const div = document.createElement('div');
-    const h2 = document.createElement('h2');
-    h2.className = 'foot-h';
-    h2.textContent = col.heading;
-    const ul = document.createElement('ul');
-    ul.className = 'foot-list';
-    for (const item of col.items) {
-      const li = document.createElement('li');
-      li.textContent = item.replace('__COUNT__', String(count));
-      ul.append(li);
-    }
-    div.append(h2, ul);
-    footCols.append(div);
+  
+  
+  const footLinks = document.getElementById('foot-links');
+  for (const item of cfg.footer.links ?? []) {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = item.href ?? '#main';
+    a.textContent = item.label;
+    li.append(a);
+    footLinks.append(li);
   }
+  const prods = globalThis.PAWGOODS_PRODUCTS ?? [];
+  const catCounts = new Map();
+  for (const p of prods) catCounts.set(p.category, (catCounts.get(p.category) ?? 0) + 1);
+  const footCats = document.getElementById('foot-cats');
+  for (const [name, n] of [...catCounts].sort((a, b) => a[0].localeCompare(b[0]))) {
+    const li = document.createElement('li');
+    li.innerHTML = '<a href="#grid"></a>';
+    const a = li.querySelector('a');
+    a.innerHTML = '<span></span><span class="foot-n"></span>';
+    a.querySelector('span').textContent = name;
+    a.querySelector('.foot-n').textContent = ` (${n})`;
+    a.addEventListener('click', (e) => { e.preventDefault(); setCategory(name); });
+    footCats.append(li);
+  }
+  
+  document.getElementById('sub-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    set('#sub-note', 'Thanks — you are on the list.');
+    e.target.reset();
+  });
 
-  // Prune nav links once every section has decided whether it exists. Done at
-  // the very bottom, after the product pass: the category section is only
-  // unhidden when tiles exist, so pruning during config load read `hidden`
-  // too early and deleted the link to a section that was about to appear.
+  
+  
+  
+  
   show('.main-nav', navList.children.length > 0);
 } catch (err) {
   console.error('config.js failed', err);
 }
 
-/* --------------------------------------------------------------- products */
+
 
 const grid = document.getElementById('grid-list');
 const tpl = document.getElementById('card-tpl');
 const catSection = document.getElementById('categories');
 const catGrid = document.getElementById('cat-grid');
 const catTpl = document.getElementById('cat-tpl');
-const filterRow = document.querySelector('.filter-row');
-const filterStatus = document.getElementById('filter-status');
 const emptyMsg = document.getElementById('empty');
 
 const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
@@ -461,11 +434,18 @@ try {
   let activeCategory = 'all';
   let query = '';
 
-  // Drop the loading placeholder. Without this the grid keeps it as a stray
-  // child forever, since it is not a .card and apply() never hides it.
+  
+  
   grid.replaceChildren();
 
-  const cards = products.map((p, i) => {
+  
+  
+  const GRID_COUNT = 9;
+  const shown = products.slice(0, GRID_COUNT + 2);
+  const saleIds = new Set(
+    [...shown].sort(() => Math.random() - 0.5).slice(0, 3).map((p) => p.id)
+  );
+  const cards = products.slice(0, GRID_COUNT).map((p, i) => {
     const node = tpl.content.cloneNode(true);
     const root = node.querySelector('.card');
     root._product = p;
@@ -473,19 +453,16 @@ try {
 
     const shot = root.querySelector('.shot');
     shot.src = p.image;
-    // The name is the heading directly below, so a repeating alt just made
-    // screen readers say it twice.
+    
+    
     shot.alt = '';
     if (i < 8) shot.loading = 'eager';
 
-    const line = root.querySelector('.cat-line');
-    if (line) line.textContent = p.category;
     root.querySelector('.name').textContent = p.name;
-    root.querySelector('.desc').textContent = p.description;
-    // Demo sale mode: every card shows the circular Sale badge + struck price.
-    // compareAt is display-only; the cart still charges p.price.
+    
+    
     const priceEl = root.querySelector('.price');
-    if (cfg.demoSale && p.compareAt && p.compareAt > p.price) {
+    if (saleIds.has(p.id) && p.compareAt && p.compareAt > p.price) {
       const badge = root.querySelector('.badge');
       badge.hidden = false;
       badge.textContent = 'Sale!';
@@ -498,30 +475,56 @@ try {
       priceEl.textContent = usd.format(p.price);
     }
 
-    // Always a real <button>: the cart works without Stripe connected, so the
-    // control stays live and only checkout is gated.
+    
+    
     const buy = root.querySelector('.buy');
-    buy.textContent = 'Add to Cart';
     buy.setAttribute('aria-label', `Add ${p.name} to cart`);
 
     grid.append(node);
     return root;
   });
 
-  // Filter links. Counts come from the data, so a new product in products.js
-  // needs no edit here.
-  const link = (label, value, n) => {
-    const a = document.createElement('button');
-    a.type = 'button';
-    a.className = 'filter';
-    a.dataset.filter = value;
-    a.setAttribute('aria-pressed', String(value === 'all'));
-    a.innerHTML = `<span>${label}</span><span class="filter-n">${String(n).padStart(2, '0')}</span>`;
-    return a;
-  };
-  filterRow.append(link('All', 'all', products.length));
-  for (const [name, n] of counts) filterRow.append(link(name, name, n));
-  filterRow.hidden = false;
+  
+  
+  const na = cfg.sections.newarrivals;
+  const naSection = document.getElementById('newarr');
+  const naSlot = document.getElementById('newarr-right');
+  const naProduct = products[GRID_COUNT];
+  if (na && naSection && naProduct) {
+    naSection.hidden = false;
+    const naImg = document.querySelector('.newarr-media img');
+    if (naImg && !naImg.getAttribute('src')) naImg.src = na.image || naProduct.image;
+
+    
+    naSlot._product = naProduct;
+    naSlot.innerHTML = '<span class="shot-wrap"><img class="shot" alt="" loading="lazy" width="640" height="730"><span class="badge" hidden></span><button type="button" class="buy"></button><span class="shot-cap" aria-hidden="true"><span class="name"></span><span class="price"></span></span></span>';
+    naSlot.querySelector('.shot').src = naProduct.image;
+    naSlot.querySelector('.name').textContent = naProduct.name;
+    const priceEl = naSlot.querySelector('.price');
+    if (saleIds.has(naProduct.id) && naProduct.compareAt && naProduct.compareAt > naProduct.price) {
+      const badge = naSlot.querySelector('.badge');
+      badge.hidden = false;
+      badge.textContent = 'Sale!';
+      priceEl.innerHTML = '';
+      const del = document.createElement('del');
+      del.textContent = usd.format(naProduct.compareAt);
+      del.setAttribute('aria-hidden', 'true');
+      priceEl.append(del, document.createTextNode(' ' + usd.format(naProduct.price)));
+    } else {
+      priceEl.textContent = usd.format(naProduct.price);
+    }
+    naSlot.querySelector('.buy').setAttribute('aria-label', `Add ${naProduct.name} to cart`);
+  }
+
+  
+  
+  function setCategory(name) {
+    activeCategory = name;
+    query = '';
+    document.getElementById('q').value = '';
+    apply();
+    document.getElementById('grid').scrollIntoView();
+  }
 
   function apply() {
     let shown = 0;
@@ -533,27 +536,11 @@ try {
       card.hidden = !ok;
       if (ok) shown++;
     }
-    for (const f of filterRow.children) {
-      f.setAttribute('aria-pressed', String(f.dataset.filter === activeCategory));
-    }
-    filterStatus.textContent = shown === products.length
-      ? `${products.length} products`
-      : `${shown} of ${products.length}`;
     emptyMsg.hidden = shown > 0;
   }
 
-  filterRow.addEventListener('click', (e) => {
-    const f = e.target.closest('.filter');
-    if (!f) return;
-    activeCategory = f.dataset.filter;
-    apply();
-  });
-
   document.getElementById('reset').addEventListener('click', () => {
-    activeCategory = 'all';
-    query = '';
-    document.getElementById('q').value = '';
-    apply();
+    setCategory('all');
   });
 
   document.getElementById('q').addEventListener('input', (e) => {
@@ -561,68 +548,105 @@ try {
     apply();
   });
 
-  // Category tiles. First photo in each category becomes the tile image.
+  
   const firstOf = new Map();
   for (const p of products) if (!firstOf.has(p.category)) firstOf.set(p.category, p);
-  for (const [name, p] of firstOf) {
-    const li = catTpl.content.cloneNode(true);
-    const tile = li.querySelector('.cat-tile');
-    tile.dataset.filter = name;
-    li.querySelector('img').src = p.image;
-    li.querySelector('img').alt = '';
+  for (const [name, first] of firstOf) {
+    const li = document.createElement('li');
+    li.className = 'cat-card';
+    li.innerHTML = '<button type="button" class="cat-photo"><img alt="" loading="lazy" width="400" height="400"><span class="cat-cap" aria-hidden="true"><span class="cat-name"></span><mark class="cat-count"></mark></span></button>';
+    const img = li.querySelector('img');
+    img.src = first.image;
+    img.alt = '';
     li.querySelector('.cat-name').textContent = name;
+    li.querySelector('.cat-count').textContent = `${counts.get(name)} Products`;
+    li.querySelector('button').setAttribute('aria-label', `Shop ${name}, ${counts.get(name)} products`);
+    li.querySelector('button').addEventListener('click', () => setCategory(name));
     catGrid.append(li);
   }
-  if (firstOf.size) catSection.hidden = false;
+  if (firstOf.size) {
+    catSection.hidden = false;
+    setEyebrow('#cat-h', cfg.sections.categories.eyebrow);
+    set('#cat-h', cfg.sections.categories.heading);
 
-  catGrid.addEventListener('click', (e) => {
-    const tile = e.target.closest('.cat-tile');
-    if (!tile) return;
-    activeCategory = tile.dataset.filter;
-    query = '';
-    document.getElementById('q').value = '';
-    apply();
-    document.getElementById('grid').scrollIntoView();
-  });
+    
+    
+    const catMore = document.getElementById('cat-more');
+    if (firstOf.size > 4) {
+      catGrid.classList.add('is-collapsed');
+      catMore.hidden = false;
+      catMore.addEventListener('click', () => {
+        const collapsed = catGrid.classList.toggle('is-collapsed');
+        catMore.textContent = collapsed ? 'View More' : 'View Less';
+        catMore.setAttribute('aria-expanded', String(!collapsed));
+      });
+    } else {
+      catMore.hidden = true;
+    }
+  }
 
-  // Category carousel arrows: the row scrolls horizontally on narrow screens.
-  const catScroller = catGrid;
-  const step = () => Math.max(160, catScroller.clientWidth * 0.8);
-  document.getElementById('cat-prev').addEventListener('click', () => catScroller.scrollBy({ left: -step(), behavior: 'smooth' }));
-  document.getElementById('cat-next').addEventListener('click', () => catScroller.scrollBy({ left: step(), behavior: 'smooth' }));
+
+  
+  const coll = cfg.sections.collections;
+  const collGrid = document.getElementById('collection-grid');
+  if (coll && collGrid && coll.items?.length) {
+    document.getElementById('collections').hidden = false;
+    set('#collections-eyebrow', coll.eyebrow);
+    set('#collections-h', coll.heading);
+    for (const item of coll.items) {
+      const li = document.createElement('li');
+      li.className = 'collection-card';
+      li.innerHTML = '<img alt="" loading="lazy" width="624" height="400"><span class="collection-label"></span>';
+      li.querySelector('img').src = item.image;
+      li.querySelector('.collection-label').textContent = item.label;
+      li.addEventListener('click', () => setCategory(item.label));
+      collGrid.append(li);
+    }
+  }
+
+  
+  const wfh = cfg.sections.wfh;
+  const wfhGrid = document.getElementById('wfh-grid');
+  if (wfh && wfhGrid && wfh.items?.length) {
+    document.getElementById('wfh').hidden = false;
+    set('#wfh-eyebrow', wfh.eyebrow);
+    set('#wfh-h', wfh.heading);
+    set('#wfh-sub', wfh.sub);
+    for (const item of wfh.items) {
+      const li = document.createElement('li');
+      li.className = 'wfh-card';
+      li.innerHTML = '<img alt="" loading="lazy" width="600" height="375"><h3></h3>';
+      li.querySelector('img').src = item.image;
+      li.querySelector('h3').textContent = item.title;
+      wfhGrid.append(li);
+    }
+  }
+
+  
+  const cb = cfg.sections.ctabanner;
+  if (cb) {
+    document.getElementById('ctabanner').hidden = false;
+    set('#ctabanner-kicker', cb.kicker);
+    set('#ctabanner-h', cb.heading);
+    const btn = document.getElementById('ctabanner-btn');
+    btn.textContent = cb.cta;
+    document.querySelector('.ctabanner-photo').src = cb.image;
+  }
 
   apply();
   grid.removeAttribute('aria-busy');
-
-  // Split section third column: any product to complete the row.
-  const splitProduct = document.getElementById('split-product');
-  const splitFirst = products[0];
-  if (splitProduct && splitFirst) {
-    const node = tpl.content.cloneNode(true);
-    const root = node.querySelector('.card');
-    root._product = splitFirst;
-    root.querySelector('.shot').src = splitFirst.image;
-    root.querySelector('.cat-line').textContent = splitFirst.category;
-    root.querySelector('.name').textContent = splitFirst.name;
-    root.querySelector('.desc').textContent = splitFirst.description;
-    root.querySelector('.price').textContent = usd.format(splitFirst.price);
-    const buy = root.querySelector('.buy');
-    buy.textContent = 'Add to Cart';
-    buy.setAttribute('aria-label', `Add ${splitFirst.name} to cart`);
-    splitProduct.append(node);
-  }
 } catch (err) {
   grid.removeAttribute('aria-busy');
   grid.textContent = 'Could not load products.js. Make sure it sits next to index.html. (' + err.message + ')';
   console.error(err);
 }
 
-/* ------------------------------------------------------------------ cart */
+
 
 const countEls = document.querySelectorAll('[data-cart-count]');
 
-// Coming back from the cart: on file:// the two pages may not share storage, so
-// the cart arrives in the URL fragment. Read it before painting the badge.
+
+
 globalThis.PawCart?.receive();
 
 let lastCount = 0;
@@ -636,8 +660,8 @@ function paintCount() {
   for (const el of countEls) {
     el.textContent = String(n);
     el.hidden = n === 0;
-    // Grow from centre on the frame the count changes, so the badge reads as a
-    // response to the add rather than a static number that appeared.
+    
+    
     if (n !== lastCount && n > 0) {
       el.classList.add('is-bumped');
       setTimeout(() => el.classList.remove('is-bumped'), 180);
@@ -649,33 +673,31 @@ function paintCount() {
   document.body.classList.toggle('has-cart-bar', n > 0);
   cartBarSum.textContent = n > 0 ? money.format(globalThis.PawCart.subtotal()) : '';
 
-  // Carry the cart in the link's fragment, because on file:// the two pages may
-  // not share storage (Firefox partitions it per file).
+  
+  
   for (const el of document.querySelectorAll('.cart-link, .cart-bar')) globalThis.PawCart.stampLink(el);
 }
 
-document.addEventListener('click', (e) => {
+
+document.getElementById('grid').addEventListener('click', handleBuy);
+document.getElementById('newarr').addEventListener('click', handleBuy);
+function handleBuy(e) {
   const btn = e.target.closest('.buy');
   if (!btn) return;
   const card = btn.closest('.card');
-  if (!card || !card._product) return;
   globalThis.PawCart.add(card._product.id);
-  // Guarded per button: clicking add twice quickly would otherwise let the
-  // first timer revert a label the second click had already replaced.
+  
   clearTimeout(btn._addedTimer);
-  btn.textContent = 'Added';
   btn.classList.add('is-added');
   btn._addedTimer = setTimeout(() => {
-    btn.textContent = 'Add to Cart';
     btn.classList.remove('is-added');
   }, 1400);
-});
+}
 
 window.addEventListener('pawcart:change', paintCount);
 paintCount();
 
-/* Transparent-over-hero header: solid once scrolled past the promo.
-   Mirrors the demo's ast-theme-transparent-header behaviour. */
+
 (function () {
   const head = document.querySelector('.site-head');
   const promo = document.querySelector('.promo');
@@ -687,11 +709,11 @@ paintCount();
   onScroll();
 })();
 
-/* -------------------------------------------------------------- nav prune */
 
-// A nav link pointing at a section this page does not have is a dead control,
-// so drop it. Runs after both render passes: a section's `hidden` flag is not
-// final until the product data has decided whether it has anything to show.
+
+
+
+
 for (const a of document.querySelectorAll('.main-nav a, .sub-nav a')) {
   const id = a.getAttribute('href')?.slice(1);
   const target = id && document.getElementById(id);

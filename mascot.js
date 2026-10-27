@@ -1,13 +1,13 @@
-// Mascot, ported to vanilla JS from nilbuild/page-mascot (MIT).
-//
-// Why a port and not the package: page-mascot is a React component and this
-// template has no build step and no framework. The behaviour is self-contained —
-// nine sprite cells for head directions, nine for expressions, pointer angle →
-// sector, click → reaction — so it ports directly. See mascot.tsx upstream for
-// the original; the constants below match it.
-//
-// Usage: <span class="mascot" data-directions="…" data-reactions="…"></span>
-// The element watches the pointer, and blinks / reacts when clicked.
+
+
+
+
+
+
+
+
+
+
 
 (function () {
   const DIRECTIONS = [
@@ -54,8 +54,8 @@
     const reactions = el.dataset.reactions;
     if (!directions || !reactions) return;
 
-    // Position must come from CSS: the logo version sets this element
-    // `position: absolute`, which an inline style would override.
+    
+    
     el.style.display = 'block';
 
     const inner = document.createElement('span');
@@ -112,8 +112,8 @@
     }
 
     el.addEventListener('click', (e) => {
-      // The mascot sits inside the logo link. Without this a boop would bubble
-      // into the anchor and navigate to the homepage.
+      
+      
       e.preventDefault();
       e.stopPropagation();
       boop();
