@@ -1490,3 +1490,18 @@ body.has-cart-bar .site-foot {
   .sub-nav ul { flex-wrap: nowrap; padding-block: 0.25rem; }
 
 }
+
+/* Way back to the portfolio from the store. */
+.portfolio-back {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  opacity: 0.6;
+  white-space: nowrap;
+  margin-right: 0.5rem;
+}
+.portfolio-back:hover { opacity: 1; }
+@media (max-width: 48rem) { .portfolio-back { display: none; } }

@@ -152,6 +152,7 @@ globalThis.PAWGOODS_CONFIG = {
   footer: {
     note: 'Demo store · product photography credited in CREDITS.md',
     links: [
+      { label: '← Arnel Colar', href: 'https://arnelcolar.github.io/' },
       { label: 'Story', href: '#split' },
       { label: 'Contact', href: '#reviews' },
       { label: 'Track Order', href: '#why' },
